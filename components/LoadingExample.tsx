@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ActivityIndicator, StatusBar, StyleSheet } from 'react-native';
 
-export function BasicSpinners() {
+export function BasicSpinners(): React.JSX.Element {
   return (
     <View style={styles.section}>
       <Text style={styles.sectionTitle}>Basic Spinners</Text>
@@ -23,9 +23,13 @@ export function BasicSpinners() {
   );
 }
 
-export function LoadingScreen() {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState(null);
+interface LoadedData {
+  message: string;
+}
+
+export function LoadingScreen(): React.JSX.Element {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [data, setData] = useState<LoadedData | null>(null);
 
   useEffect(() => {
     // Simulate API fetch
@@ -48,12 +52,12 @@ export function LoadingScreen() {
 
   return (
     <View style={styles.centered}>
-      <Text style={styles.successText}>{data.message}</Text>
+      <Text style={styles.successText}>{data?.message}</Text>
     </View>
   );
 }
 
-export default function LoadingExample() {
+export default function LoadingExample(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />

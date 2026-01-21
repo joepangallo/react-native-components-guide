@@ -1,6 +1,7 @@
+import React from 'react';
 import { View, Image, Text, ImageBackground, StyleSheet } from 'react-native';
 
-export default function ImageExamples() {
+export default function ImageExamples(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Network Image (cover)</Text>

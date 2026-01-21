@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { Modal, View, Text, Pressable, StyleSheet, Alert } from 'react-native';
 
-export default function ModalExample() {
-  const [visible, setVisible] = useState(false);
+export default function ModalExample(): React.JSX.Element {
+  const [visible, setVisible] = useState<boolean>(false);
 
   return (
     <View style={styles.container}>
@@ -40,7 +40,7 @@ export default function ModalExample() {
               <Pressable
                 style={[styles.modalButton, styles.confirmButton]}
                 onPress={() => {
-                  alert('Confirmed!');
+                  Alert.alert('Confirmed!');
                   setVisible(false);
                 }}
               >

@@ -1,6 +1,7 @@
+import React from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 
-export default function TextExamples() {
+export default function TextExamples(): React.JSX.Element {
   return (
     <View style={styles.container}>
       {/* Simple text */}
@@ -69,9 +70,16 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: '#666',
   },
-  bold: { fontWeight: 'bold' },
-  italic: { fontStyle: 'italic' },
-  link: { color: 'blue', textDecorationLine: 'underline' },
+  bold: {
+    fontWeight: 'bold',
+  },
+  italic: {
+    fontStyle: 'italic',
+  },
+  link: {
+    color: 'blue',
+    textDecorationLine: 'underline',
+  },
   badge: {
     backgroundColor: '#ff4444',
     borderRadius: 12,

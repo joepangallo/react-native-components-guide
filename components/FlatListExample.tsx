@@ -1,7 +1,26 @@
-import { useState } from 'react';
-import { FlatList, View, Text, Image, ActivityIndicator, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import {
+  FlatList,
+  View,
+  Text,
+  Image,
+  ActivityIndicator,
+  StyleSheet,
+  ListRenderItem,
+} from 'react-native';
 
-const DATA = [
+interface ListItem {
+  id: string;
+  title: string;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  image: string;
+}
+
+const DATA: ListItem[] = [
   { id: '1', title: 'First Item' },
   { id: '2', title: 'Second Item' },
   { id: '3', title: 'Third Item' },
@@ -12,8 +31,8 @@ const DATA = [
   { id: '8', title: 'Eighth Item' },
 ];
 
-export function BasicList() {
-  const renderItem = ({ item }) => (
+export function BasicList(): React.JSX.Element {
+  const renderItem: ListRenderItem<ListItem> = ({ item }) => (
     <View style={styles.item}>
       <Text style={styles.title}>{item.title}</Text>
     </View>
@@ -28,11 +47,11 @@ export function BasicList() {
   );
 }
 
-export function RefreshableList() {
-  const [data, setData] = useState(DATA);
-  const [refreshing, setRefreshing] = useState(false);
+export function RefreshableList(): React.JSX.Element {
+  const [data, setData] = useState<ListItem[]>(DATA);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
-  const onRefresh = async () => {
+  const onRefresh = async (): Promise<void> => {
     setRefreshing(true);
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -43,7 +62,7 @@ export function RefreshableList() {
     setRefreshing(false);
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem: ListRenderItem<ListItem> = ({ item }) => (
     <View style={styles.item}>
       <Text style={styles.title}>{item.title}</Text>
     </View>
@@ -60,8 +79,8 @@ export function RefreshableList() {
   );
 }
 
-export function GridList() {
-  const products = [
+export function GridList(): React.JSX.Element {
+  const products: Product[] = [
     { id: '1', name: 'Product 1', image: 'https://picsum.photos/120/120?random=1' },
     { id: '2', name: 'Product 2', image: 'https://picsum.photos/120/120?random=2' },
     { id: '3', name: 'Product 3', image: 'https://picsum.photos/120/120?random=3' },
@@ -70,15 +89,17 @@ export function GridList() {
     { id: '6', name: 'Product 6', image: 'https://picsum.photos/120/120?random=6' },
   ];
 
+  const renderItem: ListRenderItem<Product> = ({ item }) => (
+    <View style={styles.gridItem}>
+      <Image source={{ uri: item.image }} style={styles.gridImage} />
+      <Text style={styles.gridText}>{item.name}</Text>
+    </View>
+  );
+
   return (
     <FlatList
       data={products}
-      renderItem={({ item }) => (
-        <View style={styles.gridItem}>
-          <Image source={{ uri: item.image }} style={styles.gridImage} />
-          <Text style={styles.gridText}>{item.name}</Text>
-        </View>
-      )}
+      renderItem={renderItem}
       keyExtractor={(item) => item.id}
       numColumns={2}
       columnWrapperStyle={styles.row}
@@ -86,21 +107,21 @@ export function GridList() {
   );
 }
 
-export function InfiniteList() {
-  const [data, setData] = useState(
+export function InfiniteList(): React.JSX.Element {
+  const [data, setData] = useState<ListItem[]>(
     Array.from({ length: 10 }, (_, i) => ({
       id: String(i + 1),
       title: `Item ${i + 1}`,
     }))
   );
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const loadMore = async () => {
+  const loadMore = async (): Promise<void> => {
     if (loading) return;
     setLoading(true);
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    const newItems = Array.from({ length: 5 }, (_, i) => ({
+    const newItems: ListItem[] = Array.from({ length: 5 }, (_, i) => ({
       id: String(data.length + i + 1),
       title: `Item ${data.length + i + 1}`,
     }));
@@ -108,14 +129,16 @@ export function InfiniteList() {
     setLoading(false);
   };
 
+  const renderItem: ListRenderItem<ListItem> = ({ item }) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{item.title}</Text>
+    </View>
+  );
+
   return (
     <FlatList
       data={data}
-      renderItem={({ item }) => (
-        <View style={styles.item}>
-          <Text style={styles.title}>{item.title}</Text>
-        </View>
-      )}
+      renderItem={renderItem}
       keyExtractor={(item) => item.id}
       onEndReached={loadMore}
       onEndReachedThreshold={0.5}
@@ -124,7 +147,7 @@ export function InfiniteList() {
   );
 }
 
-export default function FlatListExample() {
+export default function FlatListExample(): React.JSX.Element {
   return <RefreshableList />;
 }
 

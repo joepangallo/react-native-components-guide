@@ -1,6 +1,7 @@
+import React from 'react';
 import { View, Button, Text, Alert, StyleSheet } from 'react-native';
 
-export default function ButtonExample() {
+export default function ButtonExample(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Button Component</Text>

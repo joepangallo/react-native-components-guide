@@ -1,5 +1,9 @@
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { View, Text, Pressable, ScrollView, StyleSheet } from 'react-native';
 
@@ -19,9 +23,42 @@ import SafeAreaExample from './components/SafeAreaExample';
 import LoadingExample from './components/LoadingExample';
 import ListItemExample from './components/ListItemExample';
 
-const Stack = createNativeStackNavigator();
+// Define the navigation param list
+type RootStackParamList = {
+  Home: undefined;
+  'View & Card': undefined;
+  'Flexbox Layout': undefined;
+  Text: undefined;
+  TextInput: undefined;
+  Image: undefined;
+  ScrollView: undefined;
+  FlatList: undefined;
+  'FlatList Grid': undefined;
+  'Infinite List': undefined;
+  SectionList: undefined;
+  Pressable: undefined;
+  Button: undefined;
+  Modal: undefined;
+  SafeAreaView: undefined;
+  ActivityIndicator: undefined;
+  'List Item Pattern': undefined;
+};
 
-const SCREENS = [
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+
+interface HomeScreenProps {
+  navigation: HomeScreenNavigationProp;
+}
+
+interface ScreenConfig {
+  name: keyof RootStackParamList;
+  component: React.ComponentType<object>;
+  description: string;
+}
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const SCREENS: ScreenConfig[] = [
   {
     name: 'View & Card',
     component: CardScreen,
@@ -104,7 +141,7 @@ const SCREENS = [
   },
 ];
 
-function CardScreen() {
+function CardScreen(): React.JSX.Element {
   return (
     <ScrollView style={styles.screenContainer}>
       <Text style={styles.screenTitle}>View & Card Component</Text>
@@ -127,7 +164,7 @@ function CardScreen() {
   );
 }
 
-function TextInputScreen() {
+function TextInputScreen(): React.JSX.Element {
   return (
     <ScrollView style={styles.screenContainer}>
       <TextInputExamples />
@@ -135,7 +172,7 @@ function TextInputScreen() {
   );
 }
 
-function ImageScreen() {
+function ImageScreen(): React.JSX.Element {
   return (
     <ScrollView style={styles.screenContainer}>
       <ImageExamples />
@@ -143,7 +180,7 @@ function ImageScreen() {
   );
 }
 
-function HomeScreen({ navigation }) {
+function HomeScreen({ navigation }: HomeScreenProps): React.JSX.Element {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -183,7 +220,7 @@ function HomeScreen({ navigation }) {
   );
 }
 
-export default function App() {
+export default function App(): React.JSX.Element {
   return (
     <SafeAreaProvider>
       <NavigationContainer>

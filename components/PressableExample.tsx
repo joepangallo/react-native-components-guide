@@ -1,6 +1,16 @@
-import { View, Pressable, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import {
+  View,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 
-export function PressableButton() {
+export function PressableButton(): React.JSX.Element {
   return (
     <Pressable
       style={({ pressed }) => [
@@ -19,7 +29,7 @@ export function PressableButton() {
   );
 }
 
-export function TouchableOpacityButton() {
+export function TouchableOpacityButton(): React.JSX.Element {
   return (
     <TouchableOpacity
       onPress={() => console.log('TouchableOpacity pressed')}
@@ -31,24 +41,48 @@ export function TouchableOpacityButton() {
   );
 }
 
-export function CustomButton({ title, onPress, variant = 'primary' }) {
+type ButtonVariant = 'primary' | 'secondary' | 'outline';
+
+interface CustomButtonProps {
+  title: string;
+  onPress: () => void;
+  variant?: ButtonVariant;
+}
+
+export function CustomButton({
+  title,
+  onPress,
+  variant = 'primary',
+}: CustomButtonProps): React.JSX.Element {
+  const variantStyles: Record<ButtonVariant, ViewStyle> = {
+    primary: styles.primary,
+    secondary: styles.secondary,
+    outline: styles.outline,
+  };
+
+  const textVariantStyles: Record<ButtonVariant, TextStyle> = {
+    primary: styles.primaryText,
+    secondary: styles.secondaryText,
+    outline: styles.outlineText,
+  };
+
   return (
     <Pressable
       style={({ pressed }) => [
         styles.customButton,
-        styles[variant],
+        variantStyles[variant],
         pressed && styles.pressed,
       ]}
       onPress={onPress}
     >
-      <Text style={[styles.customText, styles[variant + 'Text']]}>
+      <Text style={[styles.customText, textVariantStyles[variant]]}>
         {title}
       </Text>
     </Pressable>
   );
 }
 
-export default function PressableExample() {
+export default function PressableExample(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Pressable (Recommended)</Text>
@@ -60,17 +94,17 @@ export default function PressableExample() {
       <Text style={styles.sectionTitle}>Custom Button Variants</Text>
       <CustomButton
         title="Primary Button"
-        onPress={() => alert('Primary clicked')}
+        onPress={() => Alert.alert('Pressed', 'Primary clicked')}
         variant="primary"
       />
       <CustomButton
         title="Secondary Button"
-        onPress={() => alert('Secondary clicked')}
+        onPress={() => Alert.alert('Pressed', 'Secondary clicked')}
         variant="secondary"
       />
       <CustomButton
         title="Outline Button"
-        onPress={() => alert('Outline clicked')}
+        onPress={() => Alert.alert('Pressed', 'Outline clicked')}
         variant="outline"
       />
 
@@ -132,18 +166,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
-  primary: { backgroundColor: '#007AFF' },
-  secondary: { backgroundColor: '#E5E5E5' },
+  primary: {
+    backgroundColor: '#007AFF',
+  },
+  secondary: {
+    backgroundColor: '#E5E5E5',
+  },
   outline: {
     backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: '#007AFF',
   },
-  pressed: { opacity: 0.8 },
-  customText: { fontSize: 16, fontWeight: '600' },
-  primaryText: { color: 'white' },
-  secondaryText: { color: '#333' },
-  outlineText: { color: '#007AFF' },
+  pressed: {
+    opacity: 0.8,
+  },
+  customText: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  primaryText: {
+    color: 'white',
+  },
+  secondaryText: {
+    color: '#333',
+  },
+  outlineText: {
+    color: '#007AFF',
+  },
   infoBox: {
     marginTop: 30,
     padding: 15,

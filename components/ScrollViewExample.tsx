@@ -1,6 +1,7 @@
+import React from 'react';
 import { ScrollView, View, Text, Image, StyleSheet } from 'react-native';
 
-export function VerticalScrollExample() {
+export function VerticalScrollExample(): React.JSX.Element {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Terms of Service</Text>
@@ -40,8 +41,8 @@ export function VerticalScrollExample() {
   );
 }
 
-export function HorizontalScrollExample() {
-  const images = [
+export function HorizontalScrollExample(): React.JSX.Element {
+  const images: string[] = [
     'https://picsum.photos/200/150?random=1',
     'https://picsum.photos/200/150?random=2',
     'https://picsum.photos/200/150?random=3',
@@ -69,7 +70,7 @@ export function HorizontalScrollExample() {
   );
 }
 
-export default function ScrollViewExample() {
+export default function ScrollViewExample(): React.JSX.Element {
   return (
     <ScrollView style={styles.container}>
       <HorizontalScrollExample />

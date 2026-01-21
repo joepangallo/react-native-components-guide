@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { View, TextInput, Text, Button, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, Text, Button, StyleSheet, Alert } from 'react-native';
 
-export function BasicInput() {
-  const [text, setText] = useState('');
+export function BasicInput(): React.JSX.Element {
+  const [text, setText] = useState<string>('');
 
   return (
     <View style={styles.section}>
@@ -19,7 +19,7 @@ export function BasicInput() {
   );
 }
 
-export function DifferentInputTypes() {
+export function DifferentInputTypes(): React.JSX.Element {
   return (
     <View style={styles.section}>
       <Text style={styles.label}>Email Input:</Text>
@@ -68,13 +68,13 @@ export function DifferentInputTypes() {
   );
 }
 
-export function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export function LoginForm(): React.JSX.Element {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const handleSubmit = () => {
+  const handleSubmit = (): void => {
     console.log('Login:', { email, password });
-    alert(`Login attempt with: ${email}`);
+    Alert.alert('Login', `Login attempt with: ${email}`);
   };
 
   return (
@@ -105,7 +105,7 @@ export function LoginForm() {
   );
 }
 
-export default function TextInputExamples() {
+export default function TextInputExamples(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <BasicInput />

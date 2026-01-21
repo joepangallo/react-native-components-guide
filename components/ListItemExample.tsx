@@ -1,6 +1,28 @@
-import { View, Pressable, Image, Text, FlatList, StyleSheet } from 'react-native';
+import React from 'react';
+import {
+  View,
+  Pressable,
+  Image,
+  Text,
+  FlatList,
+  StyleSheet,
+  Alert,
+  ListRenderItem,
+} from 'react-native';
 
-function ListItem({ item, onPress }) {
+interface User {
+  id: string;
+  name: string;
+  description: string;
+  avatar: string;
+}
+
+interface ListItemProps {
+  item: User;
+  onPress: (item: User) => void;
+}
+
+function ListItem({ item, onPress }: ListItemProps): React.JSX.Element {
   return (
     <Pressable
       style={({ pressed }) => [
@@ -19,7 +41,7 @@ function ListItem({ item, onPress }) {
   );
 }
 
-const USERS = [
+const USERS: User[] = [
   {
     id: '1',
     name: 'John Doe',
@@ -52,10 +74,18 @@ const USERS = [
   },
 ];
 
-export default function ListItemExample() {
-  const handlePress = (item) => {
-    alert(`Tapped: ${item.name}`);
+export default function ListItemExample(): React.JSX.Element {
+  const handlePress = (item: User): void => {
+    Alert.alert('Tapped', `Tapped: ${item.name}`);
   };
+
+  const renderItem: ListRenderItem<User> = ({ item }) => (
+    <ListItem item={item} onPress={handlePress} />
+  );
+
+  const ItemSeparator = (): React.JSX.Element => (
+    <View style={styles.separator} />
+  );
 
   return (
     <View style={styles.container}>
@@ -67,11 +97,9 @@ export default function ListItemExample() {
       </View>
       <FlatList
         data={USERS}
-        renderItem={({ item }) => (
-          <ListItem item={item} onPress={handlePress} />
-        )}
+        renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        ItemSeparatorComponent={ItemSeparator}
       />
     </View>
   );

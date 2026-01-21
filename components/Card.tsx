@@ -1,6 +1,12 @@
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ViewStyle } from 'react-native';
 
-export default function Card({ children, style }) {
+interface CardProps {
+  children: React.ReactNode;
+  style?: ViewStyle;
+}
+
+export default function Card({ children, style }: CardProps): React.JSX.Element {
   return (
     <View style={[styles.card, style]}>
       {children}
@@ -8,7 +14,7 @@ export default function Card({ children, style }) {
   );
 }
 
-export function CardExample() {
+export function CardExample(): React.JSX.Element {
   return (
     <Card>
       <Text style={styles.title}>Welcome!</Text>
@@ -29,6 +35,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
-  title: { fontSize: 18, fontWeight: 'bold' },
-  body: { fontSize: 14, color: '#666' },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  body: {
+    fontSize: 14,
+    color: '#666',
+  },
 });

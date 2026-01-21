@@ -1,6 +1,12 @@
-import { SectionList, View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { SectionList, View, Text, StyleSheet, SectionListRenderItem } from 'react-native';
 
-const DATA = [
+interface Section {
+  title: string;
+  data: string[];
+}
+
+const DATA: Section[] = [
   {
     title: 'Fruits',
     data: ['Apple', 'Banana', 'Cherry', 'Dragon Fruit'],
@@ -19,21 +25,25 @@ const DATA = [
   },
 ];
 
-export default function SectionListExample() {
+export default function SectionListExample(): React.JSX.Element {
+  const renderItem: SectionListRenderItem<string, Section> = ({ item }) => (
+    <View style={styles.item}>
+      <Text style={styles.itemText}>{item}</Text>
+    </View>
+  );
+
+  const renderSectionHeader = ({ section }: { section: Section }): React.JSX.Element => (
+    <View style={styles.header}>
+      <Text style={styles.headerText}>{section.title}</Text>
+    </View>
+  );
+
   return (
     <SectionList
       sections={DATA}
       keyExtractor={(item, index) => item + index}
-      renderItem={({ item }) => (
-        <View style={styles.item}>
-          <Text style={styles.itemText}>{item}</Text>
-        </View>
-      )}
-      renderSectionHeader={({ section: { title } }) => (
-        <View style={styles.header}>
-          <Text style={styles.headerText}>{title}</Text>
-        </View>
-      )}
+      renderItem={renderItem}
+      renderSectionHeader={renderSectionHeader}
       stickySectionHeadersEnabled={true}
       ListHeaderComponent={
         <View style={styles.listHeader}>

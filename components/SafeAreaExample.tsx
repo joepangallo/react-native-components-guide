@@ -1,7 +1,8 @@
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets, EdgeInsets } from 'react-native-safe-area-context';
 
-export function SafeAreaViewExample() {
+export function SafeAreaViewExample(): React.JSX.Element {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
       <View style={styles.content}>
@@ -15,8 +16,8 @@ export function SafeAreaViewExample() {
   );
 }
 
-export function InsetHookExample() {
-  const insets = useSafeAreaInsets();
+export function InsetHookExample(): React.JSX.Element {
+  const insets: EdgeInsets = useSafeAreaInsets();
 
   return (
     <View
@@ -44,8 +45,8 @@ export function InsetHookExample() {
   );
 }
 
-export default function SafeAreaExample() {
-  const insets = useSafeAreaInsets();
+export default function SafeAreaExample(): React.JSX.Element {
+  const insets: EdgeInsets = useSafeAreaInsets();
 
   return (
     <View style={styles.container}>
